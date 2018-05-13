@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="external\7zip\CPP\Common\IntToString.cpp">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Common\MyString.cpp">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Common\MyVector.cpp">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Common\NewHandler.cpp">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Common\StringConvert.cpp">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Common\Wildcard.cpp">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Windows\DLL.cpp">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Windows\FileDir.cpp">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Windows\FileFind.cpp">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Windows\FileIO.cpp">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Windows\FileName.cpp">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Windows\PropVariant.cpp">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\Windows\PropVariantConv.cpp">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\COutMemStream.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="external\7zip\CPP\7zip\Common\FileStreams.cpp">
+      <Filter>Imported from 7zip\7zip Common</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Extractor7Z.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ArchiveExtractCallbackAdaptor.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ArchiveOpenCallbackAdaptor.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Buffer.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Imported from 7zip">
+      <UniqueIdentifier>{94be2504-613b-413e-bc3c-3a3761697190}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imported from 7zip\7zip Common">
+      <UniqueIdentifier>{44b4099d-7cba-4967-8633-e5f76124742a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imported from 7zip\Common">
+      <UniqueIdentifier>{7d093d5b-dafe-4712-97b9-b84bd2823a99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Imported from 7zip\Windows">
+      <UniqueIdentifier>{54050814-851f-4975-a210-a15d7aa61c46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Private">
+      <UniqueIdentifier>{0b55fce9-c834-481d-a2e0-af86d3dfe51c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Public">
+      <UniqueIdentifier>{61493e47-5228-4ede-bcb0-a707fb67f120}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="external\7zip\CPP\Common\IntToString.h">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Common\MyString.h">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Common\MyVector.h">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Common\NewHandler.h">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Common\StringConvert.h">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Common\Wildcard.h">
+      <Filter>Imported from 7zip\Common</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Windows\DLL.h">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Windows\FileDir.h">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Windows\FileFind.h">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Windows\FileIO.h">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Windows\FileName.h">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Windows\PropVariant.h">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\Windows\PropVariantConv.h">
+      <Filter>Imported from 7zip\Windows</Filter>
+    </ClInclude>
+    <ClInclude Include="src\COutMemStream.h">
+      <Filter>Private</Filter>
+    </ClInclude>
+    <ClInclude Include="external\7zip\CPP\7zip\Common\FileStreams.h">
+      <Filter>Imported from 7zip\7zip Common</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Buffer.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Extractor7Z.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="include\BufferedFile.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArchiveExtractCallbackAdaptor.h">
+      <Filter>Private</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArchiveOpenCallbackAdaptor.h">
+      <Filter>Private</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Password.h">
+      <Filter>Public</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
