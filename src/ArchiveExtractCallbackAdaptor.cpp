@@ -18,37 +18,7 @@
 
 #include "ArchiveExtractCallbackAdaptor.h"
 
-#include <Windows/PropVariant.h>
-#include <Windows/PropVariantConv.h>
-
-
-
-namespace {
-
-
-class ArchiveHelper
-{
-public:
-	static std::wstring GetFileName(IInArchive* archive, size_t index) {
-		NWindows::NCOM::CPropVariant prop;
-		bool hasProp = (archive->GetProperty(static_cast<UInt32>(index), kpidPath, &prop) == S_OK);
-		return hasProp && prop.vt == VT_BSTR ? prop.bstrVal : L"";
-	}
-
-
-	static size_t GetFileSize(IInArchive* archive, size_t index) {
-		NWindows::NCOM::CPropVariant prop;
-		if (archive->GetProperty(static_cast<UInt32>(index), kpidSize, &prop) != S_OK)
-			return 0;
-
-		UInt64 fileSize;
-		ConvertPropVariantToUInt64(prop, fileSize);
-		return static_cast<size_t>(fileSize);
-	}
-};
-
-
-}  // unnamed namespace
+#include "ArchivePropertyHelper.h"
 
 
 
@@ -83,8 +53,11 @@ STDMETHODIMP ArchiveExtractCallbackAdaptor::GetStream(UInt32 index, ISequentialO
 	*outStream = nullptr;
 	m_outFileStream.Release();
 
-	auto fileName = ArchiveHelper::GetFileName(m_archive, index);
-	auto fileSize = ArchiveHelper::GetFileSize(m_archive, index);
+	auto fileSize = ArchivePropertyHelper::GetFileSize(m_archive, index);
+	if (askExtractMode != NArchive::NExtract::NAskMode::kExtract)
+		return S_OK;
+
+	auto fileName = ArchivePropertyHelper::GetFileName(m_archive, index);
 	auto newBuffer = std::make_shared<Buffer>(fileSize, m_enableSecrecy);
 	m_resultStorage->emplace_back(fileName, newBuffer);
 

@@ -58,6 +58,9 @@
     <ClCompile Include="src\Buffer.cpp">
       <Filter>Private</Filter>
     </ClCompile>
+    <ClCompile Include="src\ArchivePropertyHelper.cpp">
+      <Filter>Private</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Imported from 7zip">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="include\Password.h">
       <Filter>Public</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArchivePropertyHelper.h">
+      <Filter>Private</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

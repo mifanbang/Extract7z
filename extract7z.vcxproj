@@ -185,6 +185,7 @@
     <ClCompile Include="external\7zip\CPP\Windows\FileName.cpp" />
     <ClCompile Include="external\7zip\CPP\Windows\PropVariant.cpp" />
     <ClCompile Include="external\7zip\CPP\Windows\PropVariantConv.cpp" />
+    <ClCompile Include="src\ArchivePropertyHelper.cpp" />
     <ClCompile Include="src\Buffer.cpp" />
     <ClCompile Include="src\ArchiveExtractCallbackAdaptor.cpp" />
     <ClCompile Include="src\ArchiveOpenCallbackAdaptor.cpp" />
@@ -210,6 +211,7 @@
     <ClInclude Include="include\BufferedFile.h" />
     <ClInclude Include="src\ArchiveExtractCallbackAdaptor.h" />
     <ClInclude Include="src\ArchiveOpenCallbackAdaptor.h" />
+    <ClInclude Include="src\ArchivePropertyHelper.h" />
     <ClInclude Include="src\COutMemStream.h" />
     <ClInclude Include="include\Extractor7Z.h" />
     <ClInclude Include="include\Password.h" />

@@ -26,6 +26,7 @@
 
 #include "ArchiveExtractCallbackAdaptor.h"
 #include "ArchiveOpenCallbackAdaptor.h"
+#include "ArchivePropertyHelper.h"
 
 
 
@@ -90,6 +91,19 @@ public:
 		return true;
 	}
 
+	size_t GetUncompressedSize()
+	{
+		if (!IsValid())
+			return 0;
+
+		size_t totalSize = 0;
+		uint32_t numItems;
+		m_archive->GetNumberOfItems(&numItems);
+		for (uint32_t i = 0; i < numItems; ++i)
+			totalSize += ArchivePropertyHelper::GetFileSize(m_archive, i);
+		return totalSize;
+	}
+
 	bool IsValid()
 	{
 		return s_lib.IsLoaded() && m_archive != nullptr;
@@ -123,12 +137,10 @@ private:
 NWindows::NDLL::CLibrary Archive7Z::s_lib;
 
 
-std::unique_ptr<Password> GenerateEmptyPassword()
+bool EmptyPasswordFunc(std::wstring& out)
 {
-	return std::unique_ptr<Password>( new Password([](std::wstring& out) -> bool {
-		out.clear();
-		return true;
-	}) );
+	out.clear();
+	return true;
 }
 
 
@@ -144,14 +156,30 @@ bool Extractor7Z::CheckLibrary()
 }
 
 
+bool Extractor7Z::GetUncompressedSize(const std::wstring& path, Password* password, size_t& out)
+{
+	Password myPasswd(EmptyPasswordFunc);
+	if (password == nullptr)
+		password = &myPasswd;
+
+	auto bufferedFiles = std::make_shared<FileArchive>();
+	Archive7Z archive(path, bufferedFiles);
+
+	if (!archive.Open(*password))
+		return false;
+	out = archive.GetUncompressedSize();
+	return true;
+}
+
+
 std::shared_ptr<FileArchive> Extractor7Z::ExtractFrom(const std::wstring& path, ExtractOptions& options)
 {
 	ExtractOptions optCopy = options;
 
 	// use our Password object if none is passed in
-	std::unique_ptr<Password> myPasswd;
+	Password myPasswd(EmptyPasswordFunc);
 	if (optCopy.passwd == nullptr)
-		optCopy.passwd = (myPasswd = GenerateEmptyPassword()).get();
+		optCopy.passwd = &myPasswd;
 
 	auto bufferedFiles = std::make_shared<FileArchive>();
 	Archive7Z archive(path, bufferedFiles);

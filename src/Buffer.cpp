@@ -21,7 +21,6 @@
 #include <windows.h>
 
 
-
 namespace {
 
 

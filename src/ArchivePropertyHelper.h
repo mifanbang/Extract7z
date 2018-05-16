@@ -18,29 +18,18 @@
 
 #pragma once
 
-#include "BufferedFile.h"
-#include "Password.h"
 
-#include <memory>
+#include <string>
 
 
+struct IInArchive;
 
-class Extractor7Z
+
+
+class ArchivePropertyHelper
 {
 public:
-	struct ExtractOptions
-	{
-		Password* passwd;
-		bool isSecrecy;  // DOES NOT guarantee never being swapped out
-
-		ExtractOptions()
-			: passwd(nullptr)
-			, isSecrecy(false)
-		{ }
-	};
-
-	static bool CheckLibrary();
-	static bool GetUncompressedSize(const std::wstring& path, Password* password, size_t& out);
-	static std::shared_ptr<FileArchive> ExtractFrom(const std::wstring& path, ExtractOptions& options);
+	static std::wstring GetFileName(IInArchive* archive, size_t index);
+	static size_t GetFileSize(IInArchive* archive, size_t index);
 };
 

@@ -16,31 +16,28 @@
  *  along with this library.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#pragma once
+#include "ArchivePropertyHelper.h"
 
-#include "BufferedFile.h"
-#include "Password.h"
+#include <Common/Common.h>
+#include <7zip/Archive/IArchive.h>
+#include <Windows/PropVariant.h>
+#include <Windows/PropVariantConv.h>
 
-#include <memory>
 
 
+std::wstring ArchivePropertyHelper::GetFileName(IInArchive* archive, size_t index) {
+	NWindows::NCOM::CPropVariant prop;
+	bool hasProp = (archive->GetProperty(static_cast<UInt32>(index), kpidPath, &prop) == S_OK);
+	return hasProp && prop.vt == VT_BSTR ? prop.bstrVal : L"";
+}
 
-class Extractor7Z
-{
-public:
-	struct ExtractOptions
-	{
-		Password* passwd;
-		bool isSecrecy;  // DOES NOT guarantee never being swapped out
 
-		ExtractOptions()
-			: passwd(nullptr)
-			, isSecrecy(false)
-		{ }
-	};
+size_t ArchivePropertyHelper::GetFileSize(IInArchive* archive, size_t index) {
+	NWindows::NCOM::CPropVariant prop;
+	if (archive->GetProperty(static_cast<UInt32>(index), kpidSize, &prop) != S_OK)
+		return 0;
 
-	static bool CheckLibrary();
-	static bool GetUncompressedSize(const std::wstring& path, Password* password, size_t& out);
-	static std::shared_ptr<FileArchive> ExtractFrom(const std::wstring& path, ExtractOptions& options);
-};
-
+	UInt64 fileSize;
+	ConvertPropVariantToUInt64(prop, fileSize);
+	return static_cast<size_t>(fileSize);
+}
