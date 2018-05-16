@@ -57,7 +57,8 @@ ArchiveExtractCallbackAdaptor::ArchiveExtractCallbackAdaptor(const ArchiveExtrac
 	, m_archive(param.archive)
 	, m_resultStorage(param.resultStorage)
 	, m_outMemStream(nullptr)
-	, _outFileStream()
+	, m_outFileStream()
+	, m_enableSecrecy(param.enableSecrecy)
 {
 }
 
@@ -80,16 +81,16 @@ STDMETHODIMP ArchiveExtractCallbackAdaptor::SetCompleted(const UInt64* completeV
 STDMETHODIMP ArchiveExtractCallbackAdaptor::GetStream(UInt32 index, ISequentialOutStream** outStream, Int32 askExtractMode)
 {
 	*outStream = nullptr;
-	_outFileStream.Release();
+	m_outFileStream.Release();
 
 	auto fileName = ArchiveHelper::GetFileName(m_archive, index);
 	auto fileSize = ArchiveHelper::GetFileSize(m_archive, index);
-	auto newBuffer = std::make_shared<Buffer>(fileSize);
+	auto newBuffer = std::make_shared<Buffer>(fileSize, m_enableSecrecy);
 	m_resultStorage->emplace_back(fileName, newBuffer);
 
 	m_outMemStream = new COutMemStream(newBuffer);
 	CMyComPtr<ISequentialOutStream> outStreamLoc(m_outMemStream);
-	_outFileStream = outStreamLoc;
+	m_outFileStream = outStreamLoc;
 	*outStream = outStreamLoc.Detach();
 
 	return S_OK;
@@ -102,7 +103,7 @@ STDMETHODIMP ArchiveExtractCallbackAdaptor::PrepareOperation(Int32 askExtractMod
 
 STDMETHODIMP ArchiveExtractCallbackAdaptor::SetOperationResult(Int32 operationResult)
 {
-	_outFileStream.Release();
+	m_outFileStream.Release();
 	return S_OK;
 }
 

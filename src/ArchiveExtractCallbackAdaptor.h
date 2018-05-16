@@ -33,6 +33,7 @@ struct ArchiveExtractParam {
 	Password& passwd;
 	struct IInArchive* archive;
 	FileArchive* resultStorage;
+	bool enableSecrecy;
 };
 
 
@@ -63,6 +64,7 @@ private:
 	CMyComPtr<IInArchive> m_archive;
 	FileArchive* m_resultStorage;
 	COutMemStream* m_outMemStream;
-	CMyComPtr<ISequentialOutStream> _outFileStream;
+	CMyComPtr<ISequentialOutStream> m_outFileStream;
+	bool m_enableSecrecy;
 };
 

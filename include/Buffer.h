@@ -24,7 +24,7 @@
 class Buffer
 {
 public:
-	Buffer(size_t size);
+	Buffer(size_t size, bool protection = false);
 	~Buffer();
 
 	inline size_t GetSize() const { return m_size; }
@@ -43,5 +43,6 @@ public:
 private:
 	size_t m_size;
 	uint8_t* m_data;
+	bool m_protection;
 };
 

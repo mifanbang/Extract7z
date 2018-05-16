@@ -45,8 +45,14 @@ public:
 		: m_path(path)
 		, m_archive()
 		, m_storage(storage)
+		, m_enableSecrecy(false)
 	{
 		CreateArchiveObj();
+	}
+
+	void SetSecrecy(bool enabled)
+	{
+		m_enableSecrecy = enabled;
 	}
 
 	bool Open(Password& passwd)
@@ -74,7 +80,7 @@ public:
 		if (!IsValid())
 			return false;
 
-		ArchiveExtractParam param = { passwd, m_archive, m_storage.get() };
+		ArchiveExtractParam param = { passwd, m_archive, m_storage.get(), m_enableSecrecy };
 		ArchiveExtractCallbackAdaptor* extractCallbackSpec = new ArchiveExtractCallbackAdaptor(param);
 
 		CMyComPtr<IArchiveExtractCallback> extractCallback(extractCallbackSpec);
@@ -111,9 +117,19 @@ private:
 	std::wstring m_path;
 	CMyComPtr<IInArchive> m_archive;
 	std::shared_ptr<FileArchive>& m_storage;
+	bool m_enableSecrecy;
 };
 
 NWindows::NDLL::CLibrary Archive7Z::s_lib;
+
+
+std::unique_ptr<Password> GenerateEmptyPassword()
+{
+	return std::unique_ptr<Password>( new Password([](std::wstring& out) -> bool {
+		out.clear();
+		return true;
+	}) );
+}
 
 
 }  // unnamed namespace
@@ -128,16 +144,22 @@ bool Extractor7Z::CheckLibrary()
 }
 
 
-
-std::shared_ptr<FileArchive> Extractor7Z::ExtractFrom(const std::wstring& path, Password& passwd)
+std::shared_ptr<FileArchive> Extractor7Z::ExtractFrom(const std::wstring& path, ExtractOptions& options)
 {
-	bool noError = true;
+	ExtractOptions optCopy = options;
+
+	// use our Password object if none is passed in
+	std::unique_ptr<Password> myPasswd;
+	if (optCopy.passwd == nullptr)
+		optCopy.passwd = (myPasswd = GenerateEmptyPassword()).get();
 
 	auto bufferedFiles = std::make_shared<FileArchive>();
 	Archive7Z archive(path, bufferedFiles);
-	noError = noError && archive.Open(passwd);
-	noError = noError && archive.Extract(passwd);
+	archive.SetSecrecy(optCopy.isSecrecy);
 
+	bool noError = true;
+	noError = noError && archive.Open(*optCopy.passwd);
+	noError = noError && archive.Extract(*optCopy.passwd);
 	return noError ? bufferedFiles : nullptr;
 }
 

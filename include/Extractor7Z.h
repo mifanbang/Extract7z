@@ -28,7 +28,18 @@
 class Extractor7Z
 {
 public:
+	struct ExtractOptions
+	{
+		Password* passwd;
+		bool isSecrecy;  // DOES NOT guarantee never being swapped out
+
+		ExtractOptions()
+			: passwd(nullptr)
+			, isSecrecy(false)
+		{ }
+	};
+
 	static bool CheckLibrary();
-	static std::shared_ptr<FileArchive> ExtractFrom(const std::wstring& path, Password& passwd);
+	static std::shared_ptr<FileArchive> ExtractFrom(const std::wstring& path, ExtractOptions& options);
 };
 

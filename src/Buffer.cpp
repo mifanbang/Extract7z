@@ -18,23 +18,75 @@
 
 #include "Buffer.h"
 
+#include <windows.h>
 
 
-Buffer::Buffer(size_t size)
-	: m_size(size)
-	, m_data(new uint8_t[size])
+
+namespace {
+
+
+inline uint8_t* AllocateNormal(size_t size)
 {
+	return new uint8_t[size]();
+}
+
+inline void ReleaseNormal(uint8_t* ptr)
+{
+	delete[] ptr;
+}
+
+inline uint8_t* AllocateProtected(size_t size)
+{
+	auto newMem = reinterpret_cast<uint8_t*>(VirtualAlloc(nullptr, size, MEM_COMMIT | MEM_RESERVE, PAGE_READWRITE));
+	if (newMem != nullptr)
+		VirtualLock(newMem, size);
+	return newMem;
+}
+
+inline void ReleaseProtected(uint8_t* ptr, size_t size)
+{
+	ZeroMemory(ptr, size);
+	VirtualFree(ptr, 0, MEM_RELEASE);
+}
+
+
+// hubs
+inline uint8_t* Allocate(bool protection, size_t size)
+{
+	return protection ? AllocateProtected(size) : AllocateNormal(size);
+}
+
+inline void Release(bool protection, uint8_t* ptr, size_t size)
+{
+	if (protection)
+		ReleaseProtected(ptr, size);
+	else
+		ReleaseNormal(ptr);
+}
+
+
+}  // unnamed namespace
+
+
+
+Buffer::Buffer(size_t size, bool protection)
+	: m_size(size)
+	, m_data(nullptr)
+	, m_protection(protection)
+{
+	m_data = Allocate(m_protection, m_size);
 }
 
 Buffer::~Buffer()
 {
 	if (m_data != nullptr)
-		delete[] m_data;
+		Release(m_protection, m_data, m_size);
 }
 
 Buffer::Buffer(Buffer&& other)
 	: m_size(other.m_size)
 	, m_data(other.m_data)
+	, m_protection(other.m_protection)
 {
 	other.m_size = 0;
 	other.m_data = nullptr;
@@ -43,10 +95,11 @@ Buffer::Buffer(Buffer&& other)
 Buffer& Buffer::operator=(Buffer&& other)
 {
 	if (m_data != nullptr)
-		delete[] m_data;
+		Release(m_protection, m_data, m_size);
 
 	m_size = other.m_size;
 	m_data = other.m_data;
+	m_protection = other.m_protection;
 	other.m_size = 0;
 	other.m_data = nullptr;
 
