@@ -32,10 +32,14 @@ Most classes and functions should be self-explanatory enough so I don't want to 
 ### Class Extractor7Z
 
 - **static bool CheckLibrary()**<br>
-As 7z.dll may be missing during runtime, this function checks if the required DLL exists and functions properly.
+As `7z.dll` may be missing during runtime, this function checks if the required DLL exists and functions properly.
 
-- **static std::shared_ptr&lt;FileArchive&gt; ExtractFrom(const std::wstring& path, Password& passwd)**<br>
-If an error occurred during decompression/decryption, the returned shared pointer will be empty, i.e., casting it to type `bool` yields `false`. As for explanation and usage of the class `Password`, please read on to the next subsection.
+- **static std::shared_ptr&lt;FileArchive&gt; ExtractFrom(const std::wstring& path, ExtractOptions& options)**<br>
+If an error occurred during decompression/decryption, the returned shared pointer will be empty, i.e., casting it to type `bool` yields `false`.
+
+- **struct ExtractOptions**
+  - **Password\* passwd** - Set to `nullptr` if you don't want decryption.
+  - **bool isSecrecy** - Setting this flag hints the library to request the operating system not to swap out the decompressed data. **Nevertheless the operating system may decide not to care.**
 
 ### Class Password
 
