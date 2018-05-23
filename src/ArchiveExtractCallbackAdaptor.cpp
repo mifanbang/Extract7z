@@ -37,12 +37,12 @@ ArchiveExtractCallbackAdaptor::~ArchiveExtractCallbackAdaptor()
 }
 
 
-STDMETHODIMP ArchiveExtractCallbackAdaptor::SetTotal(UInt64 size)
+STDMETHODIMP ArchiveExtractCallbackAdaptor::SetTotal(UInt64 /*size*/)
 {
 	return S_OK;
 }
 
-STDMETHODIMP ArchiveExtractCallbackAdaptor::SetCompleted(const UInt64* completeValue)
+STDMETHODIMP ArchiveExtractCallbackAdaptor::SetCompleted(const UInt64* /*completeValue*/)
 {
 	return S_OK;
 }
@@ -69,12 +69,12 @@ STDMETHODIMP ArchiveExtractCallbackAdaptor::GetStream(UInt32 index, ISequentialO
 	return S_OK;
 }
 
-STDMETHODIMP ArchiveExtractCallbackAdaptor::PrepareOperation(Int32 askExtractMode)
+STDMETHODIMP ArchiveExtractCallbackAdaptor::PrepareOperation(Int32 /*askExtractMode*/)
 {
 	return S_OK;
 }
 
-STDMETHODIMP ArchiveExtractCallbackAdaptor::SetOperationResult(Int32 operationResult)
+STDMETHODIMP ArchiveExtractCallbackAdaptor::SetOperationResult(Int32 /*operationResult*/)
 {
 	m_outFileStream.Release();
 	return S_OK;
