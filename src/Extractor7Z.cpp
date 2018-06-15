@@ -85,7 +85,7 @@ public:
 		ArchiveExtractCallbackAdaptor* extractCallbackSpec = new ArchiveExtractCallbackAdaptor(param);
 
 		CMyComPtr<IArchiveExtractCallback> extractCallback(extractCallbackSpec);
-		if (m_archive->Extract(nullptr, -1, false, extractCallback) != S_OK)
+		if (m_archive->Extract(nullptr, static_cast<uint32_t>(-1), false, extractCallback) != S_OK)
 			return false;
 
 		return true;
